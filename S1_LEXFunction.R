@@ -203,5 +203,63 @@ SKL <- lex( N = 25,
 SKL[[1]] %>% filter(pool==1 & phase=='sim') 
 
 
+#### Three Scenarios: Kinship + Village; HHsize + Reputation; Defection 
+
+# In scenario A we include strong effects of kinship and village.
+simA <- lex(N = 25, 
+            k = 1,
+            groups =   6, 
+            tsteps = 400, 
+            alpha  =  -2, 
+            betaK  =   2, 
+            betaV  =   2, 
+            betaS  =   0, 
+            betaH  =   0, 
+            betaR  =   0, 
+            betaW  =   0, 
+            betaL  =   0, 
+            add_defectors = F, 
+            return_data = T, 
+            seed = 27,
+            Vweights = c(0.4,0.6)) 
+
+# In scenario B, we leave out the dyadic effects and only include individual effects. In this case, I am going to focus on reputation and household size, to keep these simple. This will serve as a sort NULL model. 
+simB <- lex(N = 25, 
+            k = 1,
+            groups =   6, 
+            tsteps = 400, 
+            alpha  =  -2, 
+            betaK  =   0, 
+            betaV  =   0, 
+            betaS  =   0, 
+            betaH  =   2, 
+            betaR  =   2, 
+            betaW  =   0, 
+            betaL  =   0, 
+            add_defectors = F, 
+            return_data = T, 
+            seed = 27,
+            Vweights = c(0.4,0.6)) 
+
+
+# And the final C scenario will include the same dyadic effects as simA, but will include 3 pure defectors with a def rate of 1. 
+simC <- lex(N = 25, 
+            groups =   6, 
+            tsteps = 400, 
+            alpha  =  -2, 
+            betaK  =   2, 
+            betaV  =   2, 
+            betaS  =   0, 
+            betaH  =   0, 
+            betaR  =   0, 
+            betaW  =   0, 
+            betaL  =   0, 
+            add_defectors = T,
+            N_defectors = 3, 
+            def_strength = -6, 
+            def_rate = 1,
+            return_data = T, 
+            Vweights = c(0.4,0.6)) 
+
 
 
